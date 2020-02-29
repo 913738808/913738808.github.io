@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>paly</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #canvas{
+            display: block;
+            background-color: black;
+        }
+        .ts{
+            font-size: 5rem;
+            text-align: center;
+            position: fixed;
+            left: 50%;
+            bottom: 5px;
+            color: white;
+            transform: translate(-50%,0);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+
+    <div class="ts">方向键控制左右</div>
+</body>
+<script>
+var str = 
+`---------------------------------------------------------------
+-*************--------*************-------*---*---*------------
+-*-----*-----*--------*-----*-----*--------*-----*-------------
+-*---*****---*--------*---*****---*---------*---*--------------
+-*-----*-----*--------*----*-*----*----------*-*---------------
+-*---*****---*--------*************-----------*----------------
+-*-----------*-------------------------------*-*---------------
+-*---*****---*--------*--*--*----*----------*---*--------------
+-*---*---*---*--------*--*---*-*--*--------*-----*-------------
+*----*****--**-------*----******--*-------*-------*------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+---------------------------------------------------------------
+-----------------@---------------------------------------------
+`
+    var w = 0;
+    var h = 0;
+    var cxt;
+    var x = 20
+    var player = {}
+    var bullets = []
+    window.onload = function(){
+        w = document.body.offsetWidth
+        h = document.body.offsetHeight  
+        var canvas = document.getElementById('canvas')
+        canvas.width = w
+        canvas.height = h
+        var arr = str.split('\n')
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 37) { 
+                arr[player.y] = replacePos(arr[player.y],player.x+1,"-")
+                arr[player.y] = replacePos(arr[player.y],player.x,"@")
+                draw(arr)
+            }
+            if (e && e.keyCode == 39) { 
+                // alert('右键');
+                arr[player.y] = replacePos(arr[player.y],player.x+1,"-")
+                arr[player.y] = replacePos(arr[player.y],player.x+2,"@")
+                draw(arr)
+            }
+        };
+        cxt=canvas.getContext("2d");
+        setInterval(function(){
+            draw(arr,'main')
+        },30)
+    }
+
+    function draw(arr,type){
+        cxt.fillStyle="#000000";
+        cxt.fillRect(0,0,w,h);
+        enemy = 0
+        for(var i=0;i<arr.length;i++){
+            for(var j=0;j<arr[i].length;j++){
+                if(arr[i][j]=='*'){
+                    cxt.fillStyle="#FF0000";
+                    cxt.beginPath();
+                    cxt.arc(j*15+x,i*25,5,0,Math.PI*2,true);
+                    cxt.closePath();
+                    cxt.fill();
+                    enemy++
+                }
+                if(arr[i][j]=='@'){
+                    player.x = j
+                    player.y = i
+                    cxt.fillStyle="#FFFF00";
+                    if(type=='main'){
+                        arr[player.y-1] = replacePos(arr[player.y-1],player.x+1,"1")
+                    }
+                    cxt.beginPath();
+                    cxt.arc(j*15+x,i*25,5,0,Math.PI*2,true);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+                if(arr[i][j]=='1'){
+                    cxt.fillStyle="#FFFFFF";
+                    cxt.beginPath();
+                    cxt.arc(j*15+x,i*25,3,0,Math.PI*2,true);
+                    cxt.closePath();
+                    cxt.fill();
+                    if(type=='main'){
+                        if(i>1){
+                            if(arr[i-1][j]=='*'){
+                                arr[i-1] = replacePos(arr[i-1],j+1,"-") 
+                            }else{
+                                arr[i-1] = replacePos(arr[i-1],j+1,"1")
+                                arr[i] = replacePos(arr[i],j+1,"-")
+                            }
+                        }else{
+                            arr[i] = replacePos(arr[i],j+1,"-")                        
+                        }
+                    }
+                    // arr[i-1] = replacePos(arr[i-1],j+1,"1")                    
+                }
+            }   
+        }
+        if(enemy==0){
+            cxt.fillStyle="#FFFFFF";
+            cxt.font = "50px bold 黑体";
+            // 设置颜色
+            cxt.fillStyle = "#fff";
+            // 设置水平对齐方式
+            cxt.textAlign = "center";
+            // 设置垂直对齐方式
+            cxt.textBaseline = "middle";
+            // 绘制文字（参数：要写的字，x坐标，y坐标）
+            cxt.fillText("郭兮瓶，你好!", w/2, h/2);
+        }
+    }
+
+
+    function replacePos(strObj, pos, replacetext)
+    {
+        var str = strObj.substr(0, pos-1) + replacetext + strObj.substring(pos, strObj.length);
+        return str;
+    }
+</script>
+</html>
