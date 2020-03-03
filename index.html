@@ -11,13 +11,15 @@
 </head>
 <body>
     <div id="app">
-        <div class="leftFrame"></div>
+        <div class="leftFrame">
+            <pre>
+{{code}}
+            </pre>
+        </div>
         <div class="rightFrame">
             <!-- 主视图 -->
             <div class="elevation">
-                <div v-html="mainData">
-                    <!-- {{mainData}} -->
-                </div>
+                <div v-html="mainData"></div>
             </div>
             <!-- 键盘 -->
             <div class="keyboard">

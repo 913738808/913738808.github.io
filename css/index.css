@@ -34,7 +34,15 @@ body,html{
 .leftFrame{
     width: 25%;
     height: 90%;
+    color: #fff;
     /* background-color: red; */
+    overflow-y: auto;
+    z-index: 1000;
+}
+.leftFrame::-webkit-scrollbar{display:none}
+.leftFrame>pre{
+    margin-left: 20px;
+    z-index: 1000
 }
 .rightFrame{
     width: 65%;
