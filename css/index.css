@@ -42,7 +42,9 @@ body,html{
 .leftFrame::-webkit-scrollbar{display:none}
 .leftFrame>pre{
     margin-left: 20px;
-    z-index: 1000
+    z-index: 1000;
+    color: #19c753;
+    text-shadow: 0 0 3px #e6e6e6;
 }
 .rightFrame{
     width: 65%;
