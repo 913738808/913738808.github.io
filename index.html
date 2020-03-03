@@ -1,1 +1,32 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><title>home-zey</title><link href=css/about.38b3d405.css rel=prefetch><link href=js/about.67d3740d.js rel=prefetch><link href=css/app.683213f3.css rel=preload as=style><link href=js/app.366f0462.js rel=preload as=script><link href=js/chunk-vendors.f3d09703.js rel=preload as=script><link href=css/app.683213f3.css rel=stylesheet></head><body><noscript><strong>We're sorry but home-zey doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.f3d09703.js></script><script src=js/app.366f0462.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>周恩义</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/vue.js"></script>
+    <script src="./js/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="leftFrame"></div>
+        <div class="rightFrame">
+            <!-- 主视图 -->
+            <div class="elevation">
+                <div v-html="mainData">
+                    <!-- {{mainData}} -->
+                </div>
+            </div>
+            <!-- 键盘 -->
+            <div class="keyboard">
+                <div v-for="(item, index) in keyboard" :key="index">
+                    <div :class="data.style?'key click':'key'" v-for="(data, _index) in item" :key="_index" @click="clickKey(index,_index)">{{data.info}}</div>                  
+                </div>
+            </div>
+            
+        </div>        
+    </div>
+</body>
+</html>
